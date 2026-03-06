@@ -38,4 +38,7 @@
 *.app
 
 # debug information files
+*.bak
+
+# debug information files
 *.dwo
