@@ -3,12 +3,11 @@
   "author": "Иван Карачев",
   "editor": "wokwi",
   "parts": [
-    { "type": "wokwi-breadboard-mini", "id": "bb1", "top": 286.6, "left": 64.8, "attrs": {} },
     {
-      "type": "wokwi-arduino-uno",
-      "id": "uno",
-      "top": 2.6,
-      "left": 12.6,
+      "type": "wokwi-arduino-nano",
+      "id": "nano",
+      "top": 300.6,
+      "left": 68.7,
       "rotate": 90,
       "attrs": {}
     },
@@ -58,7 +57,13 @@
       "left": -86.4,
       "attrs": { "color": "green", "xray": "1" }
     },
-    { "type": "wokwi-lcd1602", "id": "lcd1", "top": -224, "left": -4, "attrs": { "pins": "i2c" } },
+    {
+      "type": "wokwi-lcd1602",
+      "id": "lcd1",
+      "top": -12.8,
+      "left": -4,
+      "attrs": { "pins": "i2c" }
+    },
     {
       "type": "wokwi-pushbutton",
       "id": "btn3",
@@ -75,14 +80,6 @@
     }
   ],
   "connections": [
-    [ "uno:5V", "bb1:1t.a", "red", [ "h-30.3", "v171", "h38.4" ] ],
-    [ "uno:GND.2", "bb1:17t.a", "black", [ "h-20.7", "v142.3", "h220.8" ] ],
-    [ "servo1:PWM", "uno:7", "blue", [ "v-9.6", "h-48.2", "v-247.6" ] ],
-    [ "servo2:PWM", "uno:8", "cyan", [ "v-9.6", "h-38.6", "v-57.6" ] ],
-    [ "servo3:PWM", "uno:9", "purple", [ "v-19.2", "h-77", "v-460.8", "h432", "v196.8" ] ],
-    [ "servo4:PWM", "uno:10", "orange", [ "v-9.6", "h-67.4", "v-259.2", "h412.8", "v177.7" ] ],
-    [ "btn2:2.l", "uno:11", "gold", [ "h-28.8", "v-230.2", "h384", "v163.2" ] ],
-    [ "btn1:2.l", "uno:12", "gray", [ "h-9.6", "v-76.6" ] ],
     [ "servo3:GND", "bb1:17b.j", "black", [ "v-9.6", "h67.2", "v19.2", "h211.2" ] ],
     [ "servo4:GND", "bb1:17t.b", "black", [ "v-9.6", "h57.6", "v105.6" ] ],
     [ "servo1:GND", "bb1:17b.i", "black", [ "v-19.2" ] ],
@@ -91,16 +88,33 @@
     [ "servo4:V+", "bb1:1t.c", "red", [ "v-19.2", "h76.7", "v124.8" ] ],
     [ "servo1:V+", "bb1:1t.e", "red", [ "v28.8", "h-86.5", "v-105.6" ] ],
     [ "servo2:V+", "bb1:1t.d", "red", [ "v0" ] ],
-    [ "lcd1:SCL", "uno:A5", "orange", [ "h-19.2", "v0.3" ] ],
-    [ "lcd1:SDA", "uno:A4", "orange", [ "h-9.6", "v385.6" ] ],
     [ "lcd1:VCC", "bb1:1b.f", "red", [ "h-19.2", "v547.3", "h0" ] ],
     [ "lcd1:GND", "bb1:17t.c", "black", [ "h-28.8", "v547.2", "h268.8", "v-38.4" ] ],
-    [ "btn4:1.l", "uno:5", "green", [ "h-48", "v144" ] ],
-    [ "btn3:1.l", "uno:6", "green", [ "h-144", "v134.4" ] ],
-    [ "uno:GND.3", "btn2:1.l", "black", [ "h0" ] ],
-    [ "uno:GND.1", "btn1:1.r", "black", [ "h132.8", "v81.1" ] ],
     [ "btn3:2.r", "bb1:17t.a", "black", [ "h77", "v288.2" ] ],
-    [ "btn4:2.r", "bb1:17t.a", "black", [ "h77", "v249.8" ] ]
+    [ "btn4:2.r", "bb1:17t.a", "black", [ "h77", "v249.8" ] ],
+    [ "lcd1:SDA", "nano:A4", "green", [ "h-19.2", "v489.8" ] ],
+    [ "lcd1:SCL", "nano:A5", "green", [ "h-9.6", "v509.1" ] ],
+    [ "servo1:PWM", "nano:7", "green", [ "v-9.6", "h-67.4", "v-86.4", "h-86.4" ] ],
+    [ "servo2:PWM", "nano:8", "green", [ "v-9.6", "h-29", "v105.6" ] ],
+    [ "servo3:PWM", "nano:9", "green", [ "v-9.6", "h163", "v57.6", "h115.2", "v-163.2" ] ],
+    [ "servo4:PWM", "nano:10", "green", [ "v-9.6", "h76.6", "v48", "h192", "v19.2" ] ],
+    [
+      "btn2:2.l",
+      "nano:11",
+      "green",
+      [ "h-19.2", "v-47.8", "h124.8", "v105.6", "h192", "v38.4" ]
+    ],
+    [ "nano:GND.1", "btn2:1.r", "black", [ "h-124.8", "v-230.4" ] ],
+    [ "btn1:2.l", "nano:12", "green", [ "h-57.6", "v86.6" ] ],
+    [ "nano:GND.2", "btn1:1.r", "black", [ "h115.2", "v9.6", "h96", "v-220.8" ] ],
+    [ "btn4:1.l", "nano:5", "green", [ "h-38.4", "v364.8", "h-192", "v-57.6" ] ],
+    [ "nano:6", "btn3:1.l", "green", [ "h57.6", "v96", "h192", "v-432" ] ],
+    [ "servo1:GND", "nano:GND.2", "black", [ "v-28.8", "h-48", "v-9.6" ] ],
+    [ "servo3:GND", "nano:GND.1", "black", [ "v0" ] ],
+    [ "servo4:GND", "nano:GND.1", "black", [ "v0", "h19.2", "v182.4" ] ],
+    [ "servo2:GND", "nano:GND.2", "black", [ "v-9.6", "h19.2", "v182.4", "h-67.2", "v-9.6" ] ],
+    [ "nano:GND.2", "btn4:2.r", "black", [ "h115.2", "v9.6", "h240", "v-336" ] ],
+    [ "nano:GND.2", "btn3:2.r", "black", [ "h115.2", "v9.6", "h240", "v-393.6" ] ]
   ],
   "dependencies": {}
 }
