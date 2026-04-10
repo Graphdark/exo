@@ -37,8 +37,10 @@
 *.out
 *.app
 
-# debug information files
+# Компас автосохранения.
 *.bak
+*.m3~
+*.a3~
 
 # debug information files
 *.dwo
