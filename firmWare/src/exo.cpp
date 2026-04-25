@@ -30,7 +30,7 @@ void exo::move()
     rAngle();
     if (bl.click())
     {
-        rAncle.write((lHipA));
+        rAncle.write((rAncleA));
         delay(10);
         rHip.write((rHipA));
         delay(10);
@@ -42,7 +42,7 @@ void exo::move()
     }
     if (br.click())
     {
-        lAncle.write((lHipA));
+        lAncle.write((rAncleA));
         delay(10);
         lHip.write((rHipA));
         delay(10);

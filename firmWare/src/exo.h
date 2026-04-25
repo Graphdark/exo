@@ -6,7 +6,7 @@
 class exo
 {
 private:
-    int lHipA = 5, lAncleA = 95, rHipA = 180, rAncleA = 10, sitHip = 90, sitAncle = 90;
+    int lHipA = 5, lAncleA = 95, rHipA = 180, rAncleA = 180, sitHip = 90, sitAncle = 90;
     Servo lHip, lAncle, rHip, rAncle;
     button bl;
     button br;
