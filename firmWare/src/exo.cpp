@@ -194,36 +194,54 @@ void exo::wOtS()
 {
     needClear = false;
     stay(true);
-    if (bl.click())
+        if (bl.click()|br.click())
     {
-        lHip.write(45);
-        delay(100);
-        lAncle.write(135);
-        delay(100);
-        rHip.write(180);
-        delay(100);
-        rAncle.write(180);
-        delay(100);
-        lHip.write(180);
-        delay(100);
-        lAncle.write(180);
-        delay(100);
+        if(rAncle.read()==stayA&&rHip.read()==stayA)
+        {
+            lHip.write(sitHip);
+            lAncle.write(sitAncle);
+            lAncle.write(stayA);
+            lHip.write(stayA);
+        }
+        else if (lAncle.read()==stayA&&lHip.read()==stayA)
+        {
+            rHip.write(sitHip);
+            rAncle.write(sitAncle);
+            rAncle.write(stayA);
+            rHip.write(stayA);
+        }
+        
     }
-    if (br.click())
-    {
-        rHip.write(45);
-        delay(100);
-        rAncle.write(135);
-        delay(100);
-        lHip.write(180);
-        delay(100);
-        lAncle.write(180);
-        delay(100);
-        rHip.write(180);
-        delay(100);
-        rAncle.write(180);
-        delay(100);
-    }
+    // if (bl.click())
+    // {
+    //     lHip.write(45);
+    //     delay(100);
+    //     lAncle.write(135);
+    //     delay(100);
+    //     rHip.write(180);
+    //     delay(100);
+    //     rAncle.write(180);
+    //     delay(100);
+    //     lHip.write(180);
+    //     delay(100);
+    //     lAncle.write(180);
+    //     delay(100);
+    // }
+    // if (br.click())
+    // {
+    //     rHip.write(45);
+    //     delay(100);
+    //     rAncle.write(135);
+    //     delay(100);
+    //     lHip.write(180);
+    //     delay(100);
+    //     lAncle.write(180);
+    //     delay(100);
+    //     rHip.write(180);
+    //     delay(100);
+    //     rAncle.write(180);
+    //     delay(100);
+    // }
 }
 
 void exo::stay(bool b)
