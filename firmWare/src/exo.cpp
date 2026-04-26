@@ -28,31 +28,49 @@ void exo::atach(int Hipl, int Anclel, int Hipr, int Ancler, int butL, int butR)
 void exo::move()
 {
     rAngle();
-    if (bl.click())
+    if (bl.click()|br.click())
     {
-        rAncle.write((rAncleA));
-        delay(10);
-        rHip.write((rHipA));
-        delay(10);
-        lHip.write((lHipA));
-        delay(10);
-        lAncle.write((lAncleA));
-        delay(10);
-        // rAncle.write((lHipA));
+        if(rAncle.read()==stayA&&rHip.read()==stayA)
+        {
+            lHip.write(lHipA);
+            lAncle.write(lAncleA);
+            lAncle.write(stayA);
+            lHip.write(stayA);
+        }
+        else if (lAncle.read()==stayA&&lHip.read()==stayA)
+        {
+            rHip.write(rHipA);
+            rAncle.write(rAncleA);
+            rAncle.write(stayA);
+            rHip.write(stayA);
+        }
+        
     }
-    if (br.click())
-    {
-        lAncle.write((rAncleA));
-        delay(10);
-        lHip.write((rHipA));
-        delay(10);
-        rHip.write((lHipA));
-        delay(10);
-        rAncle.write((lAncleA));
-        delay(10);
-        // lAncle.write((lHipA));
-        // delay(10);
-    }
+    // if (bl.click())
+    // {
+    //     rAncle.write((rAncleA));
+    //     delay(10);
+    //     rHip.write((rHipA));
+    //     delay(10);
+    //     lHip.write((lHipA));
+    //     delay(10);
+    //     lAncle.write((lAncleA));
+    //     delay(10);
+    //     // rAncle.write((lHipA));
+    // }
+    // if (br.click())
+    // {
+    //     lAncle.write((rAncleA));
+    //     delay(10);
+    //     lHip.write((rHipA));
+    //     delay(10);
+    //     rHip.write((lHipA));
+    //     delay(10);
+    //     rAncle.write((lAncleA));
+    //     delay(10);
+    //     // lAncle.write((lHipA));
+    //     // delay(10);
+    // }
     rAngle();
 }
 
