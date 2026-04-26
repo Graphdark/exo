@@ -28,7 +28,7 @@ void exo::atach(int Hipl, int Anclel, int Hipr, int Ancler, int butL, int butR)
 void exo::move()
 {
     rAngle();
-    if (bl.click()|br.click())
+    if (bl.click())
     {
         if(rAncle.read()==stayA&&rHip.read()==stayA)
         {
@@ -36,16 +36,19 @@ void exo::move()
             lAncle.write(lAncleA);
             lAncle.write(stayA);
             lHip.write(stayA);
-        }
-        else if (lAncle.read()==stayA&&lHip.read()==stayA)
+        }        
+    }
+    if (br.click())
+    {
+        if (lAncle.read()==stayA&&lHip.read()==stayA)
         {
             rHip.write(rHipA);
             rAncle.write(rAncleA);
             rAncle.write(stayA);
             rHip.write(stayA);
         }
-        
     }
+    
     // if (bl.click())
     // {
     //     rAncle.write((rAncleA));
@@ -194,7 +197,7 @@ void exo::wOtS()
 {
     needClear = false;
     stay(true);
-        if (bl.click()|br.click())
+    if (bl.click())
     {
         if(rAncle.read()==stayA&&rHip.read()==stayA)
         {
@@ -203,14 +206,16 @@ void exo::wOtS()
             lAncle.write(stayA);
             lHip.write(stayA);
         }
-        else if (lAncle.read()==stayA&&lHip.read()==stayA)
+    }
+    if (br.click())
+    {
+        if (lAncle.read()==stayA&&lHip.read()==stayA)
         {
             rHip.write(sitHip);
             rAncle.write(sitAncle);
             rAncle.write(stayA);
             rHip.write(stayA);
         }
-        
     }
     // if (bl.click())
     // {
