@@ -1,4 +1,20 @@
 #include "exo.h"
+#include "GBUS.h"
+#include <SoftwareSerial.h>
+
+#define GBUS_PIN 10
+#define GBUS_BAUD 9600
+
+SoftwareSerial gbusSerial(GBUS_PIN, GBUS_PIN);
+GBUS slave(&gbusSerial, 2, 64);
+
+struct ServoCommand {
+  uint8_t lh, lk, rh, rk;
+  uint8_t btn;
+  uint8_t interval;
+};
+
+ServoCommand cmd;
 
 const int lHip = 10;
 const int lAncle = 9;
@@ -31,6 +47,22 @@ void lcdPrint(int str)
   fexo.lcd.print(str);
 }
 
+
+bool handleGBUS() {
+  if (slave.gotData()) {
+    // 🔹 Исправлено: явное приведение типов
+    if (slave.readData(cmd)) {
+      // Используем Serial.print вместо printf для совместимости с AVR
+      Serial.print("📥 Received: LH="); Serial.print(cmd.lh);
+      Serial.print(", LK="); Serial.print(cmd.lk);
+      Serial.print(", RH="); Serial.print(cmd.rh);
+      Serial.print(", RK="); Serial.println(cmd.rk);
+      return true;
+    }
+  }
+  return false;
+}
+
 void setup()
 {
   Serial.begin(9600);
@@ -39,6 +71,7 @@ void setup()
   fexo.sit(true);
   butD.atach(bD);
   bup.atach(UpB);
+  gbusSerial.begin(GBUS_BAUD);
 
   fexo.lcd.setCursor(1, 0);
   fexo.lcd.print("load");
@@ -47,6 +80,12 @@ void setup()
 void loop()
 {
   // lcd.clear();
+  slave.tick();
+  if (handleGBUS())
+  {
+    fexo.servRul(cmd.lh,cmd.lk,cmd.rh,cmd.rk);
+  }
+  
   if (butD.click())
   {
     if (lcmd != 0) lcmd = lcmd-1;

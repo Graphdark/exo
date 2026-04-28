@@ -20,6 +20,7 @@ public:
     int getLAncleA() {return lAncleA;};
     int getRHipA() {return rHipA;};
     int getRAncleA() {return rAncleA;};
+    void servRul(int lH, int lA, int rH, int rA);
     void move();
     void stay();
     void sit();

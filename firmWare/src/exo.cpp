@@ -25,6 +25,16 @@ void exo::atach(int Hipl, int Anclel, int Hipr, int Ancler, int butL, int butR)
     lcd.backlight();
 }
 
+void exo::servRul(int lH, int lA, int rH, int rA)
+{
+    rAngle();
+    lHip.write(lH);
+    lAncle.write(lA);
+    rHip.write(rH);
+    rAncle.write(rA);
+    rAngle();
+}
+
 void exo::move()
 {
     rAngle();
