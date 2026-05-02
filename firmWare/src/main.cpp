@@ -2,7 +2,7 @@
 #include "GBUS.h"
 #include <SoftwareSerial.h>
 
-#define GBUS_PIN 10
+#define GBUS_PIN 4
 #define GBUS_BAUD 9600
 
 SoftwareSerial gbusSerial(GBUS_PIN, GBUS_PIN);
