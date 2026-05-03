@@ -10,10 +10,9 @@ private:
     Servo lHip, lAncle, rHip, rAncle;
     button bl;
     button br;
-    void rAngle();
+    LiquidCrystal_I2C lcd;
 public:
     String fcmd[8] {"sit","stay","walk","wOp","set Left Hip","set Left Anc","set Right Hip","set Right Anc"};
-    LiquidCrystal_I2C lcd;
     exo();
     void atach(int Hipl, int Anclel, int Hipr, int Ancler, int butL, int butR);
     int getLHipA() {return lHipA;};
@@ -21,6 +20,7 @@ public:
     int getRHipA() {return rHipA;};
     int getRAncleA() {return rAncleA;};
     void servRul(int lH, int lA, int rH, int rA);
+    void lcdPrint(String str);
     void move();
     void stay();
     void sit();
@@ -35,5 +35,5 @@ public:
     void setRAncleA();
     void setSitHitA();
     void setSitAncleA();
-    bool needClear = false;
+    String rAngle();
 };

@@ -32,22 +32,6 @@ exo fexo;
 button butD, bup;
 int lcmd = 0;
 
-void lcdPrint(String str)
-{
-  if (fexo.needClear) return;
-  fexo.lcd.clear();
-  fexo.lcd.setCursor(1, 0);
-  fexo.lcd.print(str);
-}
-
-void lcdPrint(int str)
-{
-  fexo.lcd.clear();
-  fexo.lcd.setCursor(1, 0);
-  fexo.lcd.print(str);
-}
-
-
 bool handleGBUS() {
   if (slave.gotData()) {
     // 🔹 Исправлено: явное приведение типов
@@ -73,8 +57,8 @@ void setup()
   bup.atach(UpB);
   gbusSerial.begin(GBUS_BAUD);
 
-  fexo.lcd.setCursor(1, 0);
-  fexo.lcd.print("load");
+  fexo.lcdPrint("load");
+  delay(2000);
 }
 
 void loop()
@@ -99,61 +83,56 @@ void loop()
     case 0:
     {
       fexo.sit();
-      lcdPrint(fexo.fcmd[lcmd]);
+      fexo.lcdPrint(fexo.fcmd[lcmd]);
       Serial.println(fexo.fcmd[lcmd]);
       break;
     }
     case 1:
     {
       fexo.stay();
-      lcdPrint(fexo.fcmd[lcmd]);
+      fexo.lcdPrint(fexo.fcmd[lcmd]);
       Serial.print(fexo.fcmd[lcmd]);
       break;
     }
     case 2:
     {
       fexo.move();
-        fexo.needClear = true;
-      lcdPrint(fexo.fcmd[lcmd]);
+      fexo.lcdPrint(fexo.fcmd[lcmd]);
       Serial.print(fexo.fcmd[lcmd]);
       break;
     }
     case 3:
     {
       fexo.wOtS();
-      lcdPrint(fexo.fcmd[lcmd]);
+      fexo.lcdPrint(fexo.fcmd[lcmd]);
       Serial.print(fexo.fcmd[lcmd]);
       break;
     }
   case 4:
       {
         fexo.setLHipA();
-        fexo.needClear = true;
-        lcdPrint(fexo.fcmd[lcmd]);
+        fexo.lcdPrint(fexo.fcmd[lcmd]);
         Serial.print(fexo.fcmd[lcmd]);
         break;
       }
   case 5:
       {
         fexo.setLAncleA();
-        fexo.needClear = true;
-        lcdPrint(fexo.fcmd[lcmd]);
+        fexo.lcdPrint(fexo.fcmd[lcmd]);
         Serial.print(fexo.fcmd[lcmd]);
         break;
       }
   case 6:
       {
         fexo.setRHipA();
-        fexo.needClear = true;
-        lcdPrint(fexo.fcmd[lcmd]);
+        fexo.lcdPrint(fexo.fcmd[lcmd]);
         Serial.print(fexo.fcmd[lcmd]);
         break;
       }
   case 7:
       {
         fexo.setRAncleA();
-        fexo.needClear = true;
-        lcdPrint(fexo.fcmd[lcmd]);
+        fexo.lcdPrint(fexo.fcmd[lcmd]);
         Serial.print(fexo.fcmd[lcmd]);
         break;
       }

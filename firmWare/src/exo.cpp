@@ -1,13 +1,5 @@
 #include "exo.h"
 
-void exo::rAngle()
-{
-    lcd.setCursor(0,1);
-    lcd.print("RH:") + lcd.print(rHip.read()) + lcd.print("RA:") + lcd.print(rAncle.read()) + lcd.print("    ");
-    lcd.setCursor(0,0);
-    lcd.print("LH:") + lcd.print(lHip.read()) + lcd.print("LA:") + lcd.print(lAncle.read()) + lcd.print("    ");
-}
-
 exo::exo()
 {
 }
@@ -27,36 +19,37 @@ void exo::atach(int Hipl, int Anclel, int Hipr, int Ancler, int butL, int butR)
 
 void exo::servRul(int lH, int lA, int rH, int rA)
 {
-    rAngle();
     lHip.write(lH);
     lAncle.write(lA);
     rHip.write(rH);
     rAncle.write(rA);
-    rAngle();
+}
+
+void exo::lcdPrint(String str)
+{
+    int l = (16 - str.length())/2;
+    lcd.clear();
+    lcd.setCursor(0,l);
+    lcd.print(str);
 }
 
 void exo::move()
 {
-    rAngle();
     if (bl.click())
     {
-        if(rAncle.read()==stayA&&rHip.read()==stayA)
-        {
-            lHip.write(lHipA);
-            lAncle.write(lAncleA);
-            lAncle.write(stayA);
-            lHip.write(stayA);
-        }        
+        lHip.write(lHipA);
+        lAncle.write(lAncleA);
+        Serial.println(rAngle());
+        lAncle.write(stayA);
+        lHip.write(stayA);
     }
     if (br.click())
     {
-        if (lAncle.read()==stayA&&lHip.read()==stayA)
-        {
-            rHip.write(rHipA);
-            rAncle.write(rAncleA);
-            rAncle.write(stayA);
-            rHip.write(stayA);
-        }
+        rHip.write(rHipA);
+        rAncle.write(rAncleA);
+        Serial.println(rAngle());
+        rAncle.write(stayA);
+        rHip.write(stayA);
     }
     
     // if (bl.click())
@@ -84,7 +77,6 @@ void exo::move()
     //     // lAncle.write((lHipA));
     //     // delay(10);
     // }
-    rAngle();
 }
 
 void exo::setLHipA()
@@ -99,16 +91,7 @@ void exo::setLHipA()
         if (lHipA == 0) lHipA = lHipA;
         lHipA -= lHipA;
     }
-    bool needClear = true;
-    if (needClear)
-    {
-        needClear = !needClear;
-        lcd.clear();
-    }
-    lcd.setCursor(1,0);
-    lcd.print("set Left Hip:");
-    lcd.setCursor(1,1);
-    lcd.print("Left Hip ang:")+lcd.print(lHipA);
+    lcdPrint("Left Hip ang:" + lHipA);
 }
 
 void exo::setLAncleA()
@@ -123,16 +106,7 @@ void exo::setLAncleA()
         if (lAncleA == 30) lAncleA = lAncleA;;
         lAncleA -= lAncleA;
     }
-    bool needClear = true;
-    if (needClear)
-    {
-        needClear = !needClear;
-        lcd.clear();
-    }
-    lcd.setCursor(1,0);
-    lcd.print("set Left Ancle:");
-    lcd.setCursor(1,1);
-    lcd.print("Left Anc ang:")+lcd.print(lAncleA);
+    lcdPrint("Left Anc ang:" + lAncleA);
 }
 
 void exo::setRHipA()
@@ -147,16 +121,7 @@ void exo::setRHipA()
         if (rHipA == 0) rHipA = rHipA;
         rHipA -= rHipA;
     }
-    bool needClear = true;
-    if (needClear)
-    {
-        needClear = !needClear;
-        lcd.clear();
-    }
-    lcd.setCursor(1,0);
-    lcd.print("set Right Hip:");
-    lcd.setCursor(1,1);
-    lcd.print("RightHip ang:")+lcd.print(lHipA);
+    lcdPrint("RightHip ang:" + lHipA);
 }
 
 void exo::setRAncleA()
@@ -171,15 +136,13 @@ void exo::setRAncleA()
         if (rAncleA == 30) rAncleA = rAncleA;
         rAncleA -= rAncleA;
     }
-    if (needClear)
-    {
-        needClear = !needClear;
-        lcd.clear();
-    }
-    lcd.setCursor(1,0);
-    lcd.print("set Right Ancle:");
-    lcd.setCursor(1,1);
-    lcd.print("RightAnc ang:")+lcd.print(rAncleA);
+    lcdPrint("RightAnc ang:" + rAncleA);
+}
+
+String exo::rAngle()
+{
+    String res = String(lHip.read()) + " " + String(lAncle.read()) + " " + String(rHip.read()) + " " + String(rAncle.read());
+    return res;
 }
 
 void exo::sit()
@@ -205,7 +168,6 @@ void exo::sit(bool b)
 
 void exo::wOtS()
 {
-    needClear = false;
     stay(true);
     if (bl.click())
     {
