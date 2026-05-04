@@ -76,8 +76,18 @@ void loop()
   }
   if (bup.click())
   {
-    if (lcmd != 7) lcmd = lcmd+1;
+    if (lcmd != 4) lcmd = lcmd+1;
   }
+
+  if (fexo.bl.click())  //Если нажата левая лампочка горит.
+  {
+    digitalWrite(LED_BUILTIN,HIGH);
+  }
+    if (fexo.br.click())//Если нажата правая лампочка гаснет.
+  {
+    digitalWrite(LED_BUILTIN,LOW);
+  }
+  
   switch (lcmd)
   {
     case 0:
@@ -108,33 +118,5 @@ void loop()
       Serial.print(fexo.fcmd[lcmd]);
       break;
     }
-  case 4:
-      {
-        fexo.setLHipA();
-        fexo.lcdPrint(fexo.fcmd[lcmd]);
-        Serial.print(fexo.fcmd[lcmd]);
-        break;
-      }
-  case 5:
-      {
-        fexo.setLAncleA();
-        fexo.lcdPrint(fexo.fcmd[lcmd]);
-        Serial.print(fexo.fcmd[lcmd]);
-        break;
-      }
-  case 6:
-      {
-        fexo.setRHipA();
-        fexo.lcdPrint(fexo.fcmd[lcmd]);
-        Serial.print(fexo.fcmd[lcmd]);
-        break;
-      }
-  case 7:
-      {
-        fexo.setRAncleA();
-        fexo.lcdPrint(fexo.fcmd[lcmd]);
-        Serial.print(fexo.fcmd[lcmd]);
-        break;
-      }
   }
 }
