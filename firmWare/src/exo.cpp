@@ -1,5 +1,47 @@
 #include "exo.h"
 
+void exo::setLegPos(bool l, int p)
+{
+    if (l == legState) return;
+    legState = l;
+
+    switch (p)
+    {
+        case 0: // Сидя
+            rHip.write(sitHip);   rAncle.write(sitAncle);
+            lHip.write(sitHip);   lAncle.write(sitAncle);
+            break;
+
+        case 1: // Стоя
+            rHip.write(stayA);    rAncle.write(stayA);
+            lHip.write(stayA);    lAncle.write(stayA);
+            break;
+
+        case 2: // Шаг
+            if (l) {
+                rHip.write(stayA);  rAncle.write(stayA);
+                lHip.write(lHipA);  lAncle.write(lAncleA);
+            } else {
+                lHip.write(stayA);  lAncle.write(stayA);
+                rHip.write(lHipA);  rAncle.write(lAncleA);
+            }
+            break;
+
+        case 3: // Одна нога сидит, другая стоит
+            if (l) {
+                rHip.write(stayA);  rAncle.write(stayA);
+                lHip.write(sitHip); lAncle.write(sitAncle);
+            } else {
+                lHip.write(stayA);  lAncle.write(stayA);
+                rHip.write(sitHip); rAncle.write(sitAncle);
+            }
+            break;
+            
+        default:
+            break; // Защита от невалидного p
+    }
+}
+
 exo::exo()
 {
 }
@@ -37,46 +79,12 @@ void exo::move()
 {
     if (bl.click())
     {
-        lHip.write(lHipA);
-        lAncle.write(lAncleA);
-        Serial.println(rAngle());
-        lAncle.write(stayA);
-        lHip.write(stayA);
+        setLegPos(true,2);
     }
     if (br.click())
     {
-        rHip.write(rHipA);
-        rAncle.write(rAncleA);
-        Serial.println(rAngle());
-        rAncle.write(stayA);
-        rHip.write(stayA);
+        setLegPos(false,2);
     }
-    
-    // if (bl.click())
-    // {
-    //     rAncle.write((rAncleA));
-    //     delay(10);
-    //     rHip.write((rHipA));
-    //     delay(10);
-    //     lHip.write((lHipA));
-    //     delay(10);
-    //     lAncle.write((lAncleA));
-    //     delay(10);
-    //     // rAncle.write((lHipA));
-    // }
-    // if (br.click())
-    // {
-    //     lAncle.write((rAncleA));
-    //     delay(10);
-    //     lHip.write((rHipA));
-    //     delay(10);
-    //     rHip.write((lHipA));
-    //     delay(10);
-    //     rAncle.write((lAncleA));
-    //     delay(10);
-    //     // lAncle.write((lHipA));
-    //     // delay(10);
-    // }
 }
 
 void exo::setLHipA()
@@ -147,99 +155,24 @@ String exo::rAngle()
 
 void exo::sit()
 {
-    if (br.click()&&bl.click())
-    {
-        lHip.write(sitHip-10);
-        lAncle.write(sitAncle-10);
-        rHip.write(sitHip-10);
-        rAncle.write(sitAncle-10);
-        delay(100);
-    }
-}
-
-void exo::sit(bool b)
-{
-    lHip.write(sitHip-10);
-    lAncle.write(sitAncle-10);
-    rHip.write(sitHip-10);
-    rAncle.write(sitAncle-10);
-    delay(100);
+    setLegPos(true,0);
 }
 
 void exo::wOtS()
 {
-    stay(true);
     if (bl.click())
     {
-        if(rAncle.read()==stayA&&rHip.read()==stayA)
-        {
-            lHip.write(sitHip);
-            lAncle.write(sitAncle);
-            lAncle.write(stayA);
-            lHip.write(stayA);
-        }
+      setLegPos(true,2);
     }
     if (br.click())
     {
-        if (lAncle.read()==stayA&&lHip.read()==stayA)
-        {
-            rHip.write(sitHip);
-            rAncle.write(sitAncle);
-            rAncle.write(stayA);
-            rHip.write(stayA);
-        }
+      setLegPos(false,2);
     }
-    // if (bl.click())
-    // {
-    //     lHip.write(45);
-    //     delay(100);
-    //     lAncle.write(135);
-    //     delay(100);
-    //     rHip.write(180);
-    //     delay(100);
-    //     rAncle.write(180);
-    //     delay(100);
-    //     lHip.write(180);
-    //     delay(100);
-    //     lAncle.write(180);
-    //     delay(100);
-    // }
-    // if (br.click())
-    // {
-    //     rHip.write(45);
-    //     delay(100);
-    //     rAncle.write(135);
-    //     delay(100);
-    //     lHip.write(180);
-    //     delay(100);
-    //     lAncle.write(180);
-    //     delay(100);
-    //     rHip.write(180);
-    //     delay(100);
-    //     rAncle.write(180);
-    //     delay(100);
-    // }
-}
-
-void exo::stay(bool b)
-{
-    lHip.write(180);
-    lAncle.write(180);
-    rHip.write(180);
-    rAncle.write(180);
-    delay(100);
 }
 
 void exo::stay()
 {
-    if (br.click()&&bl.click())
-    {
-        lHip.write(180);
-        lAncle.write(180);
-        rHip.write(180);
-        rAncle.write(180);
-        delay(100);
-    }
+    setLegPos(true,1);
 }
 
 

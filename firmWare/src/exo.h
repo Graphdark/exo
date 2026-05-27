@@ -8,6 +8,8 @@ class exo
 private:
     int lHipA = 175, lAncleA = 175, rHipA = 175, rAncleA = 175, stayA = 180, sitHip = 90, sitAncle = 90;
     Servo lHip, lAncle, rHip, rAncle;
+    bool legState = false;
+    void setLegPos(bool l, int p);
     LiquidCrystal_I2C lcd;
 public:
     String fcmd[8] {"sit","stay","walk","wOp","set Left Hip","set Left Anc","set Right Hip","set Right Anc"};
@@ -24,8 +26,6 @@ public:
     void move();
     void stay();
     void sit();
-    void stay(bool b);
-    void sit(bool b);
     void wOtS();
     void climbU();
     void climbD();
