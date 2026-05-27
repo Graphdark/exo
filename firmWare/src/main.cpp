@@ -52,7 +52,7 @@ void setup()
   Serial.begin(9600);
   pinMode (LED_BUILTIN, OUTPUT);
   fexo.atach(lHip,lAncle,rHip,rAncle,leftb,rightb);
-  fexo.sit(true);
+  fexo.sit();
   butD.atach(bD);
   bup.atach(UpB);
   gbusSerial.begin(GBUS_BAUD);
