@@ -71,7 +71,7 @@ void exo::lcdPrint(String str)
 {
     int l = (16 - str.length())/2;
     lcd.clear();
-    lcd.setCursor(0,l);
+    lcd.setCursor(l,0);
     lcd.print(str);
 }
 
@@ -89,16 +89,8 @@ void exo::move()
 
 void exo::setLHipA()
 {
-    if (bl.click())
-    {
-        if (lHipA == 135) lHipA = lHipA;
-        lHipA += lHipA;
-    }
-    else if (br.click())
-    {
-        if (lHipA == 0) lHipA = lHipA;
-        lHipA -= lHipA;
-    }
+    if (bl.click() && lHipA < 180) lHipA++;      // +1 градус
+    else if (br.click() && lHipA > 0) lHipA--;   // -1 градус
     lcdPrint("Left Hip ang:" + lHipA);
 }
 
@@ -162,11 +154,11 @@ void exo::wOtS()
 {
     if (bl.click())
     {
-      setLegPos(true,2);
+      setLegPos(true,3);
     }
     if (br.click())
     {
-      setLegPos(false,2);
+      setLegPos(false,3);
     }
 }
 
