@@ -1,44 +1,40 @@
 #include "exo.h"
-
 void exo::setLegPos(bool l, int p)
 {
-    if (l == legState) return;
-    legState = l;
+    // Храним последнее выполненное состояние
+    static bool lastL = !l;  // Инициализируем противоположным значением
+    static int lastP = -1;   // -1 = "никогда не выполнялось"
+    
+    // Пропускаем только если и нога, и поза не изменились
+    if (l == lastL && p == lastP) return;
+    
+    lastL = l;
+    lastP = p;
 
     switch (p)
     {
         case 0: // Сидя
-            rHip.write(sitHip);   rAncle.write(sitAncle);
-            lHip.write(sitHip);   lAncle.write(sitAncle);
+            rHip.write(sitHip); rAncle.write(sitAncle);
+            lHip.write(sitHip); lAncle.write(sitAncle);
             break;
 
         case 1: // Стоя
-            rHip.write(stayA);    rAncle.write(stayA);
-            lHip.write(stayA);    lAncle.write(stayA);
+            rHip.write(stayA); rAncle.write(stayA);
+            lHip.write(stayA); lAncle.write(stayA);
             break;
 
         case 2: // Шаг
             if (l) {
-                rHip.write(stayA);  rAncle.write(stayA);
-                lHip.write(lHipA);  lAncle.write(lAncleA);
+                rHip.write(stayA); rAncle.write(stayA);
+                lHip.write(lHipA); lAncle.write(lAncleA);
             } else {
-                lHip.write(stayA);  lAncle.write(stayA);
-                rHip.write(lHipA);  rAncle.write(lAncleA);
+                lHip.write(stayA); lAncle.write(stayA);
+                rHip.write(lHipA); rAncle.write(lAncleA);
             }
             break;
 
-        case 3: // Одна нога сидит, другая стоит
-            if (l) {
-                rHip.write(stayA);  rAncle.write(stayA);
-                lHip.write(sitHip); lAncle.write(sitAncle);
-            } else {
-                lHip.write(stayA);  lAncle.write(stayA);
-                rHip.write(sitHip); rAncle.write(sitAncle);
-            }
-            break;
-            
         default:
-            break; // Защита от невалидного p
+            break;
     }
 }
 
