@@ -76,7 +76,7 @@ void loop()
   }
   if (bup.click())
   {
-    if (lcmd != 4) lcmd = lcmd+1;
+    if (lcmd != 3) lcmd = lcmd+1;
   }
 
   // if (fexo.bl.click())  //Если нажата левая лампочка горит.

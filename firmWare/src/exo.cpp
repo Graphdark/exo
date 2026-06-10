@@ -40,6 +40,7 @@ void exo::setLegPos(bool l, int p)
                 lHip.write(stayA); lAncle.write(stayA);
                 rHip.write(sitHip); rAncle.write(sitAncle);
             }
+            break;
         default:
             break;
     }
