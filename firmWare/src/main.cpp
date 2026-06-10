@@ -79,14 +79,14 @@ void loop()
     if (lcmd != 4) lcmd = lcmd+1;
   }
 
-  if (fexo.bl.click())  //Если нажата левая лампочка горит.
-  {
-    digitalWrite(LED_BUILTIN,HIGH);
-  }
-    if (fexo.br.click())//Если нажата правая лампочка гаснет.
-  {
-    digitalWrite(LED_BUILTIN,LOW);
-  }
+  // if (fexo.bl.click())  //Если нажата левая лампочка горит.
+  // {
+  //   digitalWrite(LED_BUILTIN,HIGH);
+  // }
+  //   if (fexo.br.click())//Если нажата правая лампочка гаснет.
+  // {
+  //   digitalWrite(LED_BUILTIN,LOW);
+  // }
   
   switch (lcmd)
   {

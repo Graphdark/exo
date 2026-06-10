@@ -32,7 +32,14 @@ void exo::setLegPos(bool l, int p)
                 rHip.write(lHipA); rAncle.write(lAncleA);
             }
             break;
-
+        case 3: //Шаг на месте
+            if (l) {
+                rHip.write(stayA); rAncle.write(stayA);
+                lHip.write(sitHip); lAncle.write(sitAncle);
+            } else {
+                lHip.write(stayA); lAncle.write(stayA);
+                rHip.write(sitHip); rAncle.write(sitAncle);
+            }
         default:
             break;
     }
