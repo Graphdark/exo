@@ -91,57 +91,57 @@ void exo::move()
     }
 }
 
-void exo::setLHipA()
-{
-    if (bl.click() && lHipA < 180) lHipA++;      // +1 градус
-    else if (br.click() && lHipA > 0) lHipA--;   // -1 градус
-    lcdPrint("Left Hip ang:" + lHipA);
-}
+// void exo::setLHipA()
+// {
+//     if (bl.click() && lHipA < 180) lHipA++;      // +1 градус
+//     else if (br.click() && lHipA > 0) lHipA--;   // -1 градус
+//     lcdPrint("Left Hip ang:" + lHipA);
+// }
 
-void exo::setLAncleA()
-{
-    if (bl.click())
-    {
-        if (lAncleA == 180) lAncleA = lAncleA;
-        lAncleA += lAncleA;
-    }
-    else if (br.click())
-    {
-        if (lAncleA == 30) lAncleA = lAncleA;;
-        lAncleA -= lAncleA;
-    }
-    lcdPrint("Left Anc ang:" + lAncleA);
-}
+// void exo::setLAncleA()
+// {
+//     if (bl.click())
+//     {
+//         if (lAncleA == 180) lAncleA = lAncleA;
+//         lAncleA += lAncleA;
+//     }
+//     else if (br.click())
+//     {
+//         if (lAncleA == 30) lAncleA = lAncleA;;
+//         lAncleA -= lAncleA;
+//     }
+//     lcdPrint("Left Anc ang:" + lAncleA);
+// }
 
-void exo::setRHipA()
-{
-    if (bl.click())
-    {
-        if (rHipA == 135) rHipA = rHipA;
-        rHipA += rHipA;
-    }
-    else if (br.click())
-    {
-        if (rHipA == 0) rHipA = rHipA;
-        rHipA -= rHipA;
-    }
-    lcdPrint("RightHip ang:" + lHipA);
-}
+// void exo::setRHipA()
+// {
+//     if (bl.click())
+//     {
+//         if (rHipA == 135) rHipA = rHipA;
+//         rHipA += rHipA;
+//     }
+//     else if (br.click())
+//     {
+//         if (rHipA == 0) rHipA = rHipA;
+//         rHipA -= rHipA;
+//     }
+//     lcdPrint("RightHip ang:" + lHipA);
+// }
 
-void exo::setRAncleA()
-{
-    if (bl.click())
-    {
-        if (rAncleA == 180) rAncleA = rAncleA;
-        rAncleA += rAncleA;
-    }
-    else if (br.click())
-    {
-        if (rAncleA == 30) rAncleA = rAncleA;
-        rAncleA -= rAncleA;
-    }
-    lcdPrint("RightAnc ang:" + rAncleA);
-}
+// void exo::setRAncleA()
+// {
+//     if (bl.click())
+//     {
+//         if (rAncleA == 180) rAncleA = rAncleA;
+//         rAncleA += rAncleA;
+//     }
+//     else if (br.click())
+//     {
+//         if (rAncleA == 30) rAncleA = rAncleA;
+//         rAncleA -= rAncleA;
+//     }
+//     lcdPrint("RightAnc ang:" + rAncleA);
+// }
 
 String exo::rAngle()
 {
