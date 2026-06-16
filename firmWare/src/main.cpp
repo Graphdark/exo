@@ -15,6 +15,7 @@ struct ServoCommand {
 };
 
 ServoCommand cmd;
+int prev_lcmd = -1; // -1 гарантирует, что первая команда выведется при старте
 
 const int lHip = 10;
 const int lAncle = 9;
@@ -65,11 +66,7 @@ void loop()
 {
   // lcd.clear();
   slave.tick();
-  if (handleGBUS())
-  {
-    fexo.servRul(cmd.lh,cmd.lk,cmd.rh,cmd.rk);
-  }
-  
+
   if (butD.click())
   {
     if (lcmd != 0) lcmd = lcmd-1;
@@ -79,6 +76,12 @@ void loop()
     if (lcmd != 3) lcmd = lcmd+1;
   }
 
+  if (lcmd != prev_lcmd) {
+        fexo.lcdPrint(fexo.fcmd[lcmd]);       // Вывод на LCD (только при изменении)
+        Serial.println(fexo.fcmd[lcmd]);      // Вывод в Serial с новой строкой
+        
+        prev_lcmd = lcmd;                     // Запоминаем новое состояние как "предыдущее"
+    }
   // if (fexo.bl.click())  //Если нажата левая лампочка горит.
   // {
   //   digitalWrite(LED_BUILTIN,HIGH);
@@ -101,22 +104,28 @@ void loop()
     {
       fexo.stay();
       fexo.lcdPrint(fexo.fcmd[lcmd]);
-      Serial.print(fexo.fcmd[lcmd]);
+      Serial.println(fexo.fcmd[lcmd]);
       break;
     }
     case 2:
     {
       fexo.move();
       fexo.lcdPrint(fexo.fcmd[lcmd]);
-      Serial.print(fexo.fcmd[lcmd]);
+      Serial.println(fexo.fcmd[lcmd]);
       break;
     }
     case 3:
     {
       fexo.wOtS();
       fexo.lcdPrint(fexo.fcmd[lcmd]);
-      Serial.print(fexo.fcmd[lcmd]);
+      Serial.println(fexo.fcmd[lcmd]);
       break;
     }
   }
+
+  if (handleGBUS())
+  {
+    fexo.servRul(cmd.lh,cmd.lk,cmd.rh,cmd.rk);
+  }
+  delay(10);
 }
