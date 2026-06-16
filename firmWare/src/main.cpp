@@ -96,29 +96,21 @@ void loop()
     case 0:
     {
       fexo.sit();
-      fexo.lcdPrint(fexo.fcmd[lcmd]);
-      Serial.println(fexo.fcmd[lcmd]);
       break;
     }
     case 1:
     {
       fexo.stay();
-      fexo.lcdPrint(fexo.fcmd[lcmd]);
-      Serial.println(fexo.fcmd[lcmd]);
       break;
     }
     case 2:
     {
       fexo.move();
-      fexo.lcdPrint(fexo.fcmd[lcmd]);
-      Serial.println(fexo.fcmd[lcmd]);
       break;
     }
     case 3:
     {
       fexo.wOtS();
-      fexo.lcdPrint(fexo.fcmd[lcmd]);
-      Serial.println(fexo.fcmd[lcmd]);
       break;
     }
   }
