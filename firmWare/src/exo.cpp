@@ -1,4 +1,5 @@
 #include "exo.h"
+
 void exo::setLegPos(bool l, int p)
 {
     // Храним последнее выполненное состояние
