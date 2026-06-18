@@ -6,7 +6,7 @@
 class exo
 {
 private:
-    int lHipA = 175, lAncleA = 175, rHipA = 175, rAncleA = 175, stayA = 180, sitHip = 90, sitAncle = 90;
+    int lHipA = 170, lAncleA = 170, rHipA = 170, rAncleA = 170, stayA = 180, sitHip = 90, sitAncle = 90;
     bool legState = false;
     Servo lHip, lAncle, rHip, rAncle;
     void setLegPos(bool l, int p);
