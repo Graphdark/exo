@@ -37,13 +37,10 @@ void exo::setLegPos(bool l, int p)
             if (l) {
                 rHip.write(stayA); rAncle.write(stayA);
                 lHip.write(sitHip); lAncle.write(sitAncle);
-                delay(300);
-                lHip.write(stayA); lAncle.write(stayA);
-            } else {
+            }
+            else {
                 lHip.write(stayA); lAncle.write(stayA);
                 rHip.write(sitHip); rAncle.write(sitAncle);
-                delay(300);
-                rHip.write(stayA); rAncle.write(stayA);
             }
             break;
         default:
