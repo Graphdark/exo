@@ -1,48 +1,35 @@
 #include "exo.h"
 
-void exo::setLegPos(bool l, int p)
-{
-    // Храним последнее выполненное состояние
-    static bool lastL = !l;  // Инициализируем противоположным значением
-    static int lastP = -1;   // -1 = "никогда не выполнялось"
-    
-    // Пропускаем только если и нога, и поза не изменились
-    if (l == lastL && p == lastP) return;
-    
-    lastL = l;
-    lastP = p;
-
-    switch (p)
-    {
+void exo::setLegPos(bool l, int p) {
+    switch (p) {
         case 0: // Сидя
-            rHip.write(sitHip); rAncle.write(sitAncle);
-            lHip.write(sitHip); lAncle.write(sitAncle);
+            smoothSit(); // Плавное садение
             break;
-
+            
         case 1: // Стоя
-            rHip.write(stayA); rAncle.write(stayA);
-            lHip.write(stayA); lAncle.write(stayA);
+            smoothStand(); // Плавное вставание
             break;
-
+            
         case 2: // Шаг
             if (l) {
                 rHip.write(stayA); rAncle.write(stayA);
-                lHip.write(lHipA); lAncle.write(lAncleA);
+                lHip.write(lHipA); lAncle.write(stayA);
             } else {
                 lHip.write(stayA); lAncle.write(stayA);
-                rHip.write(rHipA); rAncle.write(rAncleA);
+                rHip.write(rHipA); rAncle.write(stayA);
             }
             break;
-        case 3: //Шаг на месте
+            
+        case 3: // Шаг на месте
             if (l) {
                 rHip.write(stayA); rAncle.write(stayA);
                 lHip.write(sitHip); lAncle.write(sitAncle);
-            }
-            else {
+            } else {
                 lHip.write(stayA); lAncle.write(stayA);
                 rHip.write(sitHip); rAncle.write(sitAncle);
             }
             break;
+            
         default:
             break;
     }
@@ -173,5 +160,93 @@ void exo::stay()
     setLegPos(true,1);
 }
 
+void exo::smoothStand() {
+    int currentLHip = lHip.read();
+    int currentLAncle = lAncle.read();
+    int currentRHip = rHip.read();
+    int currentRAncle = rAncle.read();
+    
+    const int hipDelay = 60;    // Бедро: замедление на 75% (в 4 раза медленнее базовых 15мс)
+    const int ancleDelay = 30;  // Колено: замедление вдвое (в 2 раза медленнее)
+    
+    unsigned long lastHipMove = 0;
+    unsigned long lastAncleMove = 0;
+    
+    while (currentLHip != stayA || currentLAncle != stayA || 
+           currentRHip != stayA || currentRAncle != stayA) {
+        
+        unsigned long now = millis();
+        
+        // Двигаем бедра (медленно)
+        if (now - lastHipMove >= hipDelay) {
+            if (currentLHip != stayA) {
+                currentLHip += (stayA > currentLHip) ? 1 : -1;
+                lHip.write(currentLHip);
+            }
+            if (currentRHip != stayA) {
+                currentRHip += (stayA > currentRHip) ? 1 : -1;
+                rHip.write(currentRHip);
+            }
+            lastHipMove = now;
+        }
+        
+        // Двигаем колени (быстрее)
+        if (now - lastHipMove >= ancleDelay) {
+            if (currentLAncle != stayA) {
+                currentLAncle += (stayA > currentLAncle) ? 1 : -1;
+                lAncle.write(currentLAncle);
+            }
+            if (currentRAncle != stayA) {
+                currentRAncle += (stayA > currentRAncle) ? 1 : -1;
+                rAncle.write(currentRAncle);
+            }
+            lastAncleMove = now;
+        }
+    }
+}
 
+void exo::smoothSit() {
+    int currentLHip = lHip.read();
+    int currentLAncle = lAncle.read();
+    int currentRHip = rHip.read();
+    int currentRAncle = rAncle.read();
+    
+    const int hipDelay = 15;    // Бедро: быстро
+    const int ancleDelay = 30;  // Колено: медленно (в 2 раза)
+    
+    unsigned long lastHipMove = 0;
+    unsigned long lastAncleMove = 0;
+    
+    while (currentLHip != sitHip || currentLAncle != sitAncle || 
+           currentRHip != sitHip || currentRAncle != sitAncle) {
+        
+        unsigned long now = millis();
+        
+        // Двигаем бедра (быстро)
+        if (now - lastHipMove >= hipDelay) {
+            if (currentLHip != sitHip) {
+                currentLHip += (sitHip > currentLHip) ? 1 : -1;
+                lHip.write(currentLHip);
+            }
+            if (currentRHip != sitHip) {
+                currentRHip += (sitHip > currentRHip) ? 1 : -1;
+                rHip.write(currentRHip);
+            }
+            lastHipMove = now;
+        }
+        
+        // Двигаем колени (медленно)
+        if (now - lastAncleMove >= ancleDelay) {
+            if (currentLAncle != sitAncle) {
+                currentLAncle += (sitAncle > currentLAncle) ? 1 : -1;
+                lAncle.write(currentLAncle);
+            }
+            if (currentRAncle != sitAncle) {
+                currentRAncle += (sitAncle > currentRAncle) ? 1 : -1;
+                rAncle.write(currentRAncle);
+            }
+            lastAncleMove = now;
+        }
+    }
+}
 

@@ -27,6 +27,8 @@ public:
     void stay();
     void sit();
     void wOtS();
+    void smoothStand();
+    void smoothSit();
     // void climbU();
     // void climbD();
     // void setLHipA();
