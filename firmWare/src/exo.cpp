@@ -54,6 +54,7 @@ void exo::atach(int Hipl, int Anclel, int Hipr, int Ancler, int butL, int butR)
 
 void exo::servRul(int lH, int lA, int rH, int rA)
 {
+    lcdPrint("server");
     lHip.write(lH);
     lAncle.write(lA);
     rHip.write(rH);
