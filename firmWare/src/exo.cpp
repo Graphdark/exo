@@ -13,10 +13,10 @@ void exo::setLegPos(bool l, int p) {
         case 2: // Шаг
             if (l) {
                 rHip.write(stayA); rAncle.write(stayA);
-                lHip.write(lHipA); lAncle.write(stayA);
+                lHip.write(lHipA); lAncle.write(stayA-lHipA);
             } else {
                 lHip.write(stayA); lAncle.write(stayA);
-                rHip.write(rHipA); rAncle.write(stayA);
+                rHip.write(rHipA); rAncle.write(stayA-rHipA);
             }
             break;
             
