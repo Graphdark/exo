@@ -5,7 +5,7 @@
 #define GBUS_PIN 2
 #define GBUS_BAUD 9600
 
-SoftwareSerial gbusSerial(GBUS_PIN, GBUS_PIN);
+SoftwareSerial gbusSerial(GBUS_PIN, 20);
 GBUS slave(&gbusSerial, 2, 64);
 
 struct ServoCommand {
@@ -34,18 +34,15 @@ button butD, bup;
 int lcmd = 0;
 
 bool handleGBUS() {
-  if (slave.gotData()) {
-    // 🔹 Исправлено: явное приведение типов
-    if (slave.readData(cmd)) {
-      // Используем Serial.print вместо printf для совместимости с AVR
-      Serial.print("📥 Received: LH="); Serial.print(cmd.lh);
-      Serial.print(", LK="); Serial.print(cmd.lk);
-      Serial.print(", RH="); Serial.print(cmd.rh);
-      Serial.print(", RK="); Serial.println(cmd.rk);
-      return true;
-    }
+  ServoCommand cmd;
+  if (slave.readData(cmd)) {          // шаблонный readData, 1 аргумент
+    if (cmd.btn == 3) { fexo.smoothStand(); return; }
+    if (cmd.btn == 4) { fexo.smoothSit();   return; }
+    // if (cmd.btn == 1) localBtnLTrigger = cmd.lh;
+    // if (cmd.btn == 2) localBtnRTrigger = cmd.rh;
+    // fexo.servRul(cmd.lh,cmd.lk,cmd.rh,cmd.rk);
+    return true;
   }
-  return false;
 }
 
 void setup()
