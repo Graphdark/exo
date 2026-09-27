@@ -92,12 +92,12 @@ void loop()
   {
     case 0:
     {
-      fexo.sit();
+      fexo.smoothSit();
       break;
     }
     case 1:
     {
-      fexo.stay();
+      fexo.smoothStand();
       break;
     }
     case 2:
