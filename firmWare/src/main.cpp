@@ -35,13 +35,18 @@ int lcmd = 0;
 
 bool handleGBUS() {
   ServoCommand cmd;
-  if (slave.readData(cmd)) {          // шаблонный readData, 1 аргумент
-    if (cmd.btn == 3) { fexo.smoothStand(); return; }
-    if (cmd.btn == 4) { fexo.smoothSit();   return; }
-    // if (cmd.btn == 1) localBtnLTrigger = cmd.lh;
-    // if (cmd.btn == 2) localBtnRTrigger = cmd.rh;
-    return true;
-  }
+  if (!slave.readData(cmd)) return;   // CRC не сошёлся / пакет не наш — выходим
+
+  // Макросы со страницы
+  if (cmd.btn == 3) { fexo.smoothStand(); return; }
+  if (cmd.btn == 4) { fexo.smoothSit();   return; }
+
+  // Обычные углы. uint8_t 181..255 = мусор шины -> servRul сам отсечёт,
+  // но лучше не дёргать лишний раз:
+  if (cmd.lh > 180 || cmd.lk > 180 || cmd.rh > 180 || cmd.rk > 180) return;
+
+  fexo.servRul(cmd.lh, cmd.lk, cmd.rh, cmd.rk);
+  return true;
 }
 
 void setup()
@@ -91,11 +96,8 @@ void loop()
   {
     case 0:
     {
-      if (handleGBUS())
-        {
-          fexo.servRul(cmd.lh,cmd.lk,cmd.rh,cmd.rk);
-          break;
-        }
+      handleGBUS();
+      break;
     }
     case 1:
     {

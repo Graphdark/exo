@@ -54,7 +54,26 @@ void exo::atach(int Hipl, int Anclel, int Hipr, int Ancler, int butL, int butR)
 
 void exo::servRul(int lH, int lA, int rH, int rA)
 {
-    lcdPrint("server");
+    static bool exoDataValid = false;
+    static int  exoLast[4] = {-1, -1, -1, -1};   // последние реально записанные углы
+    // lcdPrint("server");
+        //Мусор снаружи 0..180 не пускаем к серво вообще ──
+    if (lH < 0 || lH > 180 ||
+        lA < 0 || lA > 180 ||
+        rH < 0 || rH > 180 ||
+        rA < 0 || rA > 180)
+    {
+        // Пакет/вызов мусорный: НЕ трогаем серво, НЕ перерисовываем lcd.
+        // Именно эта ветка раньше и давала "произвольное движение при включении".
+        return;
+    }
+    const int STEP = 3;   // минимум градусов, на которые стоит шевелить серво
+    bool changed =
+        abs(lH - exoLast[0]) >= STEP || abs(lA - exoLast[1]) >= STEP ||
+        abs(rH - exoLast[2]) >= STEP || abs(rA - exoLast[3]) >= STEP;
+    if (!changed && exoDataValid) return;   // тишина = ничего не делаем
+
+    // ── Всё валидно и значимо — едем ─
     lHip.write(lH);
     lAncle.write(lA);
     rHip.write(rH);

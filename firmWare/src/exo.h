@@ -12,7 +12,7 @@ private:
     void setLegPos(bool l, int p);
     LiquidCrystal_I2C lcd;
 public:
-    String fcmd[8] {"sit","stay","walk","walk On place","set Left Hip","set Left Anc","set Right Hip","set Right Anc"};
+    String fcmd[9] {"sit","stay","walk","walk On place","server","set Left Hip","set Left Anc","set Right Hip","set Right Anc"};
     button bl;
     button br;
     exo();
