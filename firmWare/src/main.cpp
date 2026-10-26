@@ -40,7 +40,6 @@ bool handleGBUS() {
     if (cmd.btn == 4) { fexo.smoothSit();   return; }
     // if (cmd.btn == 1) localBtnLTrigger = cmd.lh;
     // if (cmd.btn == 2) localBtnRTrigger = cmd.rh;
-    // fexo.servRul(cmd.lh,cmd.lk,cmd.rh,cmd.rk);
     return true;
   }
 }
@@ -50,7 +49,7 @@ void setup()
   Serial.begin(9600);
   pinMode (LED_BUILTIN, OUTPUT);
   fexo.atach(lHip,lAncle,rHip,rAncle,leftb,rightb);
-  fexo.smoothSit();
+  // fexo.smoothSit();
   butD.atach(bD);
   bup.atach(UpB);
   gbusSerial.begin(GBUS_BAUD);
@@ -70,7 +69,7 @@ void loop()
   }
   if (bup.click())
   {
-    if (lcmd != 3) lcmd = lcmd+1;
+    if (lcmd != 4) lcmd = lcmd+1;
   }
 
   if (lcmd != prev_lcmd) {
@@ -92,29 +91,35 @@ void loop()
   {
     case 0:
     {
-      fexo.smoothSit();
-      break;
+      if (handleGBUS())
+        {
+          fexo.servRul(cmd.lh,cmd.lk,cmd.rh,cmd.rk);
+          break;
+        }
     }
     case 1:
     {
-      fexo.smoothStand();
+      fexo.smoothSit();
       break;
     }
     case 2:
     {
-      fexo.move();
+      fexo.smoothStand();
       break;
     }
     case 3:
     {
+      fexo.move();
+      break;
+    }
+    case 4:
+    {
       fexo.wOtS();
       break;
     }
+
   }
 
-  if (handleGBUS())
-  {
-    fexo.servRul(cmd.lh,cmd.lk,cmd.rh,cmd.rk);
-  }
+
   delay(10);
 }
